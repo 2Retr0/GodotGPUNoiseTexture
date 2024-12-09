@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dh73tu1fcqo14"
+path="res://.godot/imported/alligator_noise_3d.glsl-01f7f542a36edd67c92c1bea83caa242.res"
+
+[deps]
+
+source_file="res://addons/gpu_noise_texture/examples/shaders/alligator_noise_3d.glsl"
+dest_files=["res://.godot/imported/alligator_noise_3d.glsl-01f7f542a36edd67c92c1bea83caa242.res"]
+
+[params]
+

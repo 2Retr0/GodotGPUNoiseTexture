@@ -1,0 +1,19 @@
+[gd_resource type="Texture3DRD" script_class="GPUNoiseTexture3D" load_steps=3 format=3 uid="uid://qk6pqlrggpkm"]
+
+[ext_resource type="Script" path="res://addons/gpu_noise_texture/gpu_noise_texture_3d.gd" id="1_iejem"]
+[ext_resource type="RDShaderFile" uid="uid://dh73tu1fcqo14" path="res://addons/gpu_noise_texture/examples/shaders/alligator_noise_3d.glsl" id="2_1grrx"]
+
+[resource]
+script = ExtResource("1_iejem")
+shader_file = ExtResource("2_1grrx")
+format = 8
+width = 64
+height = 64
+depth = 64
+invert = false
+seed = 0
+frequency = 0.1
+octaves = 5
+lacunarity = 2.0
+gain = 0.5
+attenuation = 0.5
