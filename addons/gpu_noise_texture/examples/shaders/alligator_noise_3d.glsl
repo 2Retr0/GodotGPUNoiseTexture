@@ -1,8 +1,7 @@
-
 #[compute]
 #version 450
 /**
- * A compute shader implementation of 3D tileable 'alligator' noise.
+ * A compute shader implementation of tileable 3D 'alligator' noise.
  *
  * Copyright (c) 2024
  *      Side Effects Software Inc.  All rights reserved.

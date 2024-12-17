@@ -117,7 +117,7 @@ void main() {
     // Discard threads outside the noise image dimensions.
     if (any(greaterThanEqual(id, imageSize(noise_image)))) return;
 
-    float noise = fbm(id, frequency, seed, octaves, lacunarity, gain);
+    float noise = fbm(id, frequency*2.0*0.1, seed, octaves, lacunarity, gain);
     noise = mix(noise, 1.0 - noise, int(invert));
     noise = pow(noise, attenuation);
     imageStore(noise_image, id, vec4(vec3(noise),1));

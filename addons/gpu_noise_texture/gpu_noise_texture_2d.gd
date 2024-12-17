@@ -36,7 +36,8 @@ const TEXTURE_TYPE := RenderingDevice.TEXTURE_TYPE_2D
 	set(value):
 		shader_file = value
 		if not shader_file: return
-		shader_file.changed.connect(_init) # Rebuild pipelines whenever the shader file is edited externally.
+		# Rebuild pipelines whenever the shader file is edited externally.
+		if not shader_file.changed.is_connected(_init): shader_file.changed.connect(_init)
 		_init()
 
 ## The image format of the the generated texture. This should match the format used
