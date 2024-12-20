@@ -32,6 +32,7 @@ layout(local_size_x = 8, local_size_y = 8, local_size_z = 8) in;
 // Note: The image format of the GPUNoiseTexture resource should match the layout used here!
 layout(r8, set = 0, binding = 0) uniform restrict writeonly image3D noise_image;
 
+// The values of these parameters match that of the GPUNoiseTexture.
 layout(push_constant) uniform PushConstants {
     bool invert;
     uint seed;
@@ -88,7 +89,7 @@ float fbm(vec3 p, float frequency, uint seed, uint num_octaves, float lacunarity
     for (uint octave = 0U; octave < num_octaves; ++octave) {
         vec3 sample_frequency = floor(frequency*dims*frequency_multiplier) / dims;
 
-        seed += 1U; // Change seed for each fractal octave (seed >= 1)
+        seed += 1234U; // Change seed for each fractal octave (seed >= 1)
         result += alligator_noise(p*sample_frequency, dims*sample_frequency, seed) * amplitude;
         frequency_multiplier *= lacunarity;    
         amplitude_sum += amplitude;

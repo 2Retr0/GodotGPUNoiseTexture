@@ -9,6 +9,7 @@ layout(local_size_x = 8, local_size_y = 8, local_size_z = 8) in;
 // Note: The image format of the GPUNoiseTexture resource should match the layout used here!
 layout(r8, set = 0, binding = 0) uniform restrict writeonly image3D noise_image;
 
+// Note: The values of these parameters match that of the GPUNoiseTexture.
 layout(push_constant) uniform PushConstants {
     bool invert;
     uint seed;
@@ -101,15 +102,15 @@ float fbm(vec3 p, float frequency, uint seed, uint num_octaves, float lacunarity
         // For seemless tiling, we take an integer fraction of the noise image dimensions.
         vec3 sample_frequency = floor(frequency*dims*frequency_multiplier) / dims;
 
-        seed += 1U; // Change seed for each fractal octave (seed >= 1)
-        // Offsetting the position by `gradient_sum*0.13` creates billowy-looking noise.
-        result += psrdnoise3d(p*sample_frequency /*+ gradient_sum*0.13*/, dims*sample_frequency, 0.5*frequency_multiplier, seed, gradient) * amplitude;
+        seed += 1234U; // Change seed for each fractal octave (seed >= 1)
+        // Offsetting the position by `gradient_sum*0.05` creates billowy-looking noise.
+        result += psrdnoise3d(p*sample_frequency /*+ gradient_sum*0.05*/, dims*sample_frequency, 0.5*frequency_multiplier, seed, gradient) * amplitude;
         frequency_multiplier *= lacunarity;    
         amplitude_sum += amplitude;
         amplitude *= gain;
         gradient_sum += gradient*frequency_multiplier;
     }
-    return result / amplitude_sum * 0.5 + 0.5; // Normalize output to [0..1]
+    return (result / amplitude_sum)*0.5 + 0.5; // Normalize output to [0..1]
 }
 
 void main() {
@@ -117,7 +118,7 @@ void main() {
     // Discard threads outside the noise image dimensions.
     if (any(greaterThanEqual(id, imageSize(noise_image)))) return;
 
-    float noise = fbm(id, frequency*2.0*0.1, seed, octaves, lacunarity, gain);
+    float noise = fbm(id, frequency, seed, octaves, lacunarity, gain);
     noise = mix(noise, 1.0 - noise, int(invert));
     noise = pow(noise, attenuation);
     imageStore(noise_image, id, vec4(vec3(noise),1));
